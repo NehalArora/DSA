@@ -1,9 +1,6 @@
 package Trees;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class Traversal {
 
@@ -61,6 +58,25 @@ public class Traversal {
         if(root.right != null) inorderHelper(root.right,ans);
     }
 
+    private List<Integer> inorderIterative(Node root){
+        List<Integer> inorder = new ArrayList<>();
+        if(root == null) return inorder;
+        Stack<Node> stack = new Stack<>();
+        while(true){
+            if(root != null){
+                stack.push(root);
+                root = root.left;
+            }
+            else{
+                if(stack.isEmpty()) break;
+                root = stack.pop();
+                inorder.add(root.data);
+                root = root.right;
+            }
+        }
+        return inorder;
+    }
+
     /**
      *Preorder traversal -> NLR
      * It travels NODE LEFT RIGHT
@@ -73,6 +89,23 @@ public class Traversal {
         if(root.right != null) preorderHelper(root.right,ans);
     }
 
+    private List<Integer> preorderIterative(Node root){
+        List<Integer> preOrder = new ArrayList<>();
+        if(root == null) return preOrder;
+
+        Stack<Node> stack = new Stack<>();
+        stack.push(root);
+
+        while(!stack.isEmpty()){
+            Node curr = stack.pop();
+            preOrder.add(curr.data);
+
+            if(root.left != null) stack.push(root.left);
+            if(root.right != null) stack.push(root.right);
+        }
+        return preOrder;
+    }
+
     /**
      *Postorder traversal -> LRN
      * It travels LEFT RIGHT NODE
@@ -83,5 +116,9 @@ public class Traversal {
         if(root.left != null) postorderHelper(root.left,ans);
         if(root.right != null) postorderHelper(root.right,ans);
         ans.add(root.data);
+    }
+
+    private List<Integer> postorderIterative(Node node){
+        return new ArrayList<>();
     }
 }
